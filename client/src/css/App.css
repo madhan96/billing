@@ -1,0 +1,17 @@
+.wrapper{
+    height: 100vh
+}
+.mainPanel {
+    background-color: #f1f1f1;
+    width: calc(100% - 260px);    
+    top:64px;
+    position: relative;
+    float: right;
+    transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+    height: calc(100% - 64px);
+}
+.content{
+    padding: 70px 70px;
+    background-color: #f1f1f1;
+
+}
