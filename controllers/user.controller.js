@@ -25,7 +25,7 @@ exports.addUser = async (req, res) => {
             // })
         })
     } catch (error) {
-        return res.status(400).json({ message: 'Error', errorMessage: error.message, errorName: 'usedName', name: err.name });
+        return res.status(400).json({ message: 'Error', errorMessage: error.message, errorName: 'usedName', name: error.name });
     }
 
 }
@@ -33,15 +33,15 @@ exports.addUser = async (req, res) => {
 exports.getUser = (req, res, username) => {
     db.getUser(username).then((userdetails) => {
         return res.status('200').json({ message: 'success', user: userdetails });
-    });
+    }).catch(err => res.status(400).json('error :' + err));
 };
 
 exports.getUsers = (req, res) => {
     db.getUsers().then((result) => {
-        console.log('the reult is');
-        console.log(result.length);
+        //console.log('the reult is');
+        //console.log(result.length);
         return res.status('200').json({ message: 'success', users: result })
-    });
+    }).catch(err => res.status(400).json('error :' + err));
 }
 
 exports.changePassword = (req, res) => {
@@ -50,7 +50,7 @@ exports.changePassword = (req, res) => {
             (result) => {
                 return res.status('200').json({ message: 'success' });
             }
-        );
+        ).catch(err => res.status(400).json('error :' + err));
     });
 }
 

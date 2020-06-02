@@ -3,7 +3,7 @@ const pool = require('./index.db');
 exports.createSale = (saledata) => {
     return new Promise((resolve, reject) => {
         pool.query('INSERT INTO SALE SET ?', saledata, (err, result) => {
-            if (err) { throw err; }
+            if (err) { reject(err); }
             return resolve(result.insertId);
         });
     });
@@ -12,44 +12,44 @@ exports.createSale = (saledata) => {
 exports.createSaleitem = (saleitemdata) => {
     return new Promise((resolve, reject) => {
         pool.query('INSERT INTO SALEITEM(quantity,price_per_unit,price,sale_id,product_id) VALUES ?', [saleitemdata], (err, result) => {
-            if (err) { throw err; }
+            if (err) { reject(err); }
             return resolve(result);
         });
     });
 };
 
 exports.createCustomer = (data) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         pool.query('INSERT INTO CUSTOMER SET ?', data, (err, result) => {
-            if (err) { throw err; }
+            if (err) { reject(err); }
             return resolve(result);
         });
     });
 };
 
 exports.editQuantity = (saleId) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         pool.query(`${query} ?`, saleId, (err, result) => {
-            if (err) { throw err; }
+            if (err) { reject(err); }
             return resolve(result);
         });
     });
 };
 
 exports.getProductReport = (proName) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         pool.query(`${query3}`, proName, (err, result) => {
-            if (err) { throw err; }
+            if (err) { reject(err); }
             return resolve(JSON.parse(JSON.stringify(result)));
         });
     });
 }
 
 exports.getBillingReport = (data) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         pool.query(`${query2}`, data, (err, result) => {
-            console.log(result);
-            if (err) { throw err; }
+
+            if (err) { reject(err); }
             return resolve(JSON.parse(JSON.stringify(result)));
         });
     });

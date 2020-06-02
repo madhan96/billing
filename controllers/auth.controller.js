@@ -5,9 +5,9 @@ const jwt = require('jsonwebtoken');
 
 exports.loginUser = async (req, res) => {
     let passHash = await db.getPassHash(req.body.username);
-    console.log(passHash);
+    //console.log(passHash);
     const passString = JSON.parse(JSON.stringify(passHash));
-    console.log(passString[0].password_hash);
+    //console.log(passString[0].password_hash);
     const match = await bcrypt.compare(req.body.password, passString[0].password_hash);
     if (match) {
         let userresult = await db.getUser(req.body.username);
@@ -28,12 +28,12 @@ exports.authUser = (req, res, next) => {
     if (bearerHeader) {
         const bearer = bearerHeader.split(' ');
         const bearerToken = bearer[1];
-        console.log(bearerToken);
+        //console.log(bearerToken);
         try {
             var decoded = jwt.verify(bearerToken, process.env.PRIVATE_KEY);
             next();
         } catch (err) {
-            console.log(err);
+            //console.log(err);
             res.sendStatus(403);
         }
     } else {

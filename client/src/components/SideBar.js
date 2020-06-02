@@ -212,10 +212,10 @@ class Sidebar extends Component {
                 {routes.map((prop, key) => {
                     // && (getItem('IS_ADMIN') === 1)
                     if ((prop.name === "User Management") && !(getItem('IS_ADMIN') == 1)) {
-                        console.log('rejected user manag');
+                        //console.log('rejected user manag');
                         return null;
                     }
-                    console.log(getItem('IS_ADMIN'));
+                    // console.log(getItem('IS_ADMIN'));
                     const listItemClasses = activeRoute(prop.layout + prop.path) ? " " + classes[color] : "";
                     const whiteFontClasses = activeRoute(prop.layout + prop.path) ? " " + classes.whiteFont : "";
                     return (

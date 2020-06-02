@@ -83,21 +83,21 @@ class ProductCard extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (nextState.inputValue !== this.state.inputValue) return true;
-        console.log('should' + this.props.product.product_name);
+        //console.log('should' + this.props.product.product_name);
         const { id } = this.props.product;
         if (!nextProps.cartList[id] && !this.props.cartList[id]) {
             return false;
         } else {
             if (this.props.cartList[id] && nextProps.cartList[id] && this.props.cartList[id].quantity === nextProps.cartList[id].quantity) return false;
         }
-        console.log('here in should');
-        console.log(this.props.cartList);
-        console.log('----');
-        console.log(nextProps.cartList);
+        //console.log('here in should');
+        //console.log(this.props.cartList);
+        //console.log('----');
+        //console.log(nextProps.cartList);
         return true;
     }
     updateCart = (value) => {
-        console.log(value);
+        //console.log(value);
         this.props.addCartData({
             quantity: value,
             price_per_unit: this.props.product.price,
@@ -106,11 +106,11 @@ class ProductCard extends Component {
             product_name: this.props.product.product_name,
             image: this.props.product.image
         })
-        console.log('updated')
+        //console.log('updated')
     }
     setValue = (value) => {
         let val = ProductCard.extractNumbers(value);
-        console.log('value is' + val);
+        //console.log('value is' + val);
         if (this.props.product.in_stock > val) {
 
             this.updateCart(val);
@@ -141,7 +141,7 @@ class ProductCard extends Component {
     };
     render() {
         const { classes, product } = this.props;
-        console.log(`card render state is ${this.state.inputValue} `);
+        //console.log(`card render state is ${this.state.inputValue} `);
 
 
 

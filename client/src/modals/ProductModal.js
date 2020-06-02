@@ -62,7 +62,7 @@ class ProductModal extends Component {
             const { image, id, ...rest } = this.props.product;
             this.setState({ ...rest })
         }
-        console.log(this.props);
+        //console.log(this.props);
     }
 
     handleClose = () => {
@@ -102,7 +102,7 @@ class ProductModal extends Component {
             this.userData.set('id', this.props.product.id);
             return editProducts(this.userData, () => { window.location.reload(); });
         }
-        console.log(this.userData);
+        //console.log(this.userData);
         postProducts(this.userData, () => { window.location.reload(); });
 
     }

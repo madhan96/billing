@@ -106,6 +106,7 @@ class UserMang extends Component {
     }
     render() {
         const { users, classes } = this.props;
+        //console.log(users);
         return (
             <div className={classes.root}>
                 <Typography

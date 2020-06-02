@@ -4,19 +4,22 @@ const getQueryArray = (products, saleId) => {
     return products.map(product => [product.quantity, product.price_per_unit, product.price, saleId, product.product_id]);
 }
 exports.createSales = async (req, res) => {
-    const { customer, products, ...sale } = req.body;
-    console.log(products);
+    try {
+        const { customer, products, ...sale } = req.body;
+        //console.log(products);
 
-    let saleId = await db.createSale({ ...sale, time_of_sale: moment(sale.time_of_sale).format("YYYY-MM-DD HH:mm:ss"), time_created: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss") });
-    console.log(`sale finished : ${saleId}`);
-    console.log(getQueryArray(products, saleId));
-    await db.createSaleitem(getQueryArray(products, saleId));
-    console.log('saleitem');
-    await db.createCustomer({ ...customer, sale_id: saleId });
-    console.log('consumer');
-    await db.editQuantity(saleId);
-    return res.status('200').json({ message: 'success', saleId: saleId });
-
+        let saleId = await db.createSale({ ...sale, time_of_sale: moment(sale.time_of_sale).format("YYYY-MM-DD HH:mm:ss"), time_created: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss") });
+        //console.log(`sale finished : ${saleId}`);
+        //console.log(getQueryArray(products, saleId));
+        await db.createSaleitem(getQueryArray(products, saleId));
+        //console.log('saleitem');
+        await db.createCustomer({ ...customer, sale_id: saleId });
+        //console.log('consumer');
+        await db.editQuantity(saleId);
+        return res.status('200').json({ message: 'success', saleId: saleId });
+    } catch (err) {
+        res.status(400).json('error :' + err)
+    }
     //.then((saleid) => {
     //     req.body.products.map(saleitem => {
     //         saleitem.sale_id = saleid;

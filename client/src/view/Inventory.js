@@ -89,10 +89,10 @@ class Inventory extends Component {
         })
     }
     render() {
-        console.log('loading cart render');
+        //console.log('loading cart render');
         const { classes, products } = this.props;
         const { page, productsPerPage } = this.state;
-        console.log(this.state);
+        //console.log(this.state);
 
         return (
 

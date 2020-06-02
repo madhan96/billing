@@ -9,7 +9,7 @@ export const selectedProducts = (state = {}, action) => {
         } else {
             let temp = Object.assign({}, state);
             temp[action.data.product_id] = action.data;
-            console.log('here');
+            //console.log('here');
             return temp;
 
         }

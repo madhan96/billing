@@ -17,7 +17,7 @@ router.route('/getUsers').get(auth.authUser, (req, res) => {
     usercontroller.getUsers(req, res);
 });
 router.route('/getUser/(:id)').get(auth.authUser, (req, res) => {
-    console.log(req.params.id);
+    //console.log(req.params.id);
     usercontroller.getUser(req, res, req.params.id)
 });
 router.route('/changePass').post(auth.authUser, usercontroller.changePassword);

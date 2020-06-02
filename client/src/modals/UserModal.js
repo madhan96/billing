@@ -46,7 +46,7 @@ class UserModal extends Component {
             const { id, ...rest } = this.props.user;
             this.setState({ ...rest, confirmPassword: this.props.user.password })
         }
-        console.log(this.props);
+        //console.log(this.props);
     }
 
     setOpen = (value) => {

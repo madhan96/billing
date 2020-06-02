@@ -1,5 +1,11 @@
 import { getItem } from '../utils/localStorage';
 function CustomException(err) {
+    //console.log(err);
+    // error.then(err => {
+    //     this.message = err.errorMessage;
+    //     this.name = err.name;
+    //     this.errorName = err.errorName;
+    // })
     this.message = err.errorMessage;
     this.name = err.name;
     this.errorName = err.errorName;
@@ -7,15 +13,22 @@ function CustomException(err) {
 export const postProducts = (formData, callback) => {
     fetch('http://localhost:5000/product/addProduct', {
         method: 'POST',
+        headers: {
+            "authorization": "bearer" + " " + getItem('ID_TOKEN')
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
         body: formData
     })
-        .then((response) => {
+        .then(async (response) => {
+            let res = await response.json()
             if (response.ok) {
-                return response.json();
-            } else throw new CustomException(response.json());
+                return res;
+            } else {
+                throw new CustomException(res);
+            }
         }
         ).then((result) => {
-            console.log('Success:', result);
+            //console.log('Success:', result);
             callback();
         })
         .catch((error) => {
@@ -24,34 +37,55 @@ export const postProducts = (formData, callback) => {
             } else {
                 alert('An Error Occured: Please try Again!');
             }
-            console.error('Error:', error);
+            //console.error('Error:', error);
         });
 }
 
 
 export const getProducts = (callback) => {
     fetch('http://localhost:5000/product/getProducts', {
-        method: "GET"
-    }).then(res => res.json())
+        method: "GET",
+        headers: {
+            "authorization": "bearer" + " " + getItem('ID_TOKEN')
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Invalid Input')
+        };
+    })
         .then(res => {
             callback(res);
         }).catch(error => {
-            console.log(error);
+            alert('An Error Occured: Please try Again!');
+            //console.error('Error:', error);
         })
 }
 
 export const editProducts = (formData, callback) => {
     fetch('http://localhost:5000/product/editProduct', {
         method: 'POST',
+        headers: {
+            "authorization": "bearer" + " " + getItem('ID_TOKEN')
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
         body: formData
     })
-        .then((response) => response.json())
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Invalid Input')
+            };
+        })
         .then((result) => {
-            console.log('Success:', result);
+            //console.log('Success:', result);
             callback();
         })
         .catch((error) => {
-            console.error('Error:', error);
+            //console.error('Error:', error);
         });
 }
 
@@ -59,14 +93,21 @@ export const deleteProduct = (data, callBackSuc, callbackFail) => {
     fetch('http://localhost:5000/product/deleteProduct', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "authorization": "bearer" + " " + getItem('ID_TOKEN')
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify(data)
     })
-        .then((response) => response.json())
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Invalid Input')
+            };
+        })
         .then((result) => {
-            console.log('Success:', result);
+            //console.log('Success:', result);
             callBackSuc(result);
         })
         .catch((error) => {
@@ -79,18 +120,25 @@ export const addSale = (data, callback, callbackFail) => {
     fetch('http://localhost:5000/sale/addSale', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "authorization": "bearer" + " " + getItem('ID_TOKEN')
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify(data)
     })
-        .then((response) => response.json())
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Invalid Input')
+            };
+        })
         .then((result) => {
-            console.log('Success:', result);
+            // console.log('Success:', result);
             callback(result.saleId);
         })
         .catch((error) => {
-            console.error('Error:', error);
+            //console.error('Error:', error);
             callbackFail();
         });
 }
@@ -99,7 +147,7 @@ export const loginService = (data, callBackSuc, callbackFail) => {
     fetch('http://localhost:5000/auth/login', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify(data)
@@ -107,14 +155,16 @@ export const loginService = (data, callBackSuc, callbackFail) => {
         .then((response) => {
             if (response.ok) {
                 return response.json();
-            } else throw new Error('Invalid Input');
+            } else {
+                throw new Error('Invalid Input');
+            }
         }
         ).then((result) => {
-            console.log('Success:', result);
+            //console.log('Success:', result);
             callBackSuc(result);
         })
         .catch((error) => {
-            console.error('Error:', error);
+            // console.error('Error:', error);
             callbackFail();
         });
 }
@@ -123,14 +173,21 @@ export const passwordService = (data, callBackSuc, callbackFail) => {
     fetch('http://localhost:5000/users/changePass', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "authorization": "bearer" + " " + getItem('ID_TOKEN')
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify(data)
     })
-        .then((response) => response.json())
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Invalid Input')
+            };
+        })
         .then((result) => {
-            console.log('Success:', result);
+            //console.log('Success:', result);
             callBackSuc();
         })
         .catch((error) => {
@@ -141,10 +198,21 @@ export const passwordService = (data, callBackSuc, callbackFail) => {
 
 export const userService = (callBackSuc, callbackFail) => {
     fetch('http://localhost:5000/users/getUsers', {
-        method: 'GET'
-    }).then((response) => response.json())
+        method: 'GET',
+        headers: {
+
+            "authorization": "bearer" + " " + getItem('ID_TOKEN'),
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        }
+    }).then((response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Invalid Input')
+        };
+    })
         .then((result) => {
-            console.log('Success:', result);
+            //console.log('Success:', result);
             callBackSuc(result);
         })
         .catch((error) => {
@@ -157,27 +225,30 @@ export const createUser = (data, callBackSuc, callbackFail) => {
     fetch('http://localhost:5000/users/post_user', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "authorization": "bearer" + " " + getItem('ID_TOKEN'),
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify(data)
     })
-        .then((response) => {
+        .then(async (response) => {
+            let res = await response.json()
             if (response.ok) {
-                return response.json();
-            } else throw new CustomException(response.json());
+                return res;
+            } else {
+                throw new CustomException(res);
+            }
         })
         .then((result) => {
-            console.log('Success:', result);
+            //console.log('Success:', result);
             callBackSuc();
         })
         .catch((error) => {
-            if (error.errorName === 'usedName') {
+            if (error.errorName === "usedName") {
                 alert(error.message);
             } else {
                 alert('An Error Occured: Please try Again!');
             }
-            console.error('Error:', error);
             callbackFail();
         });
 }
@@ -186,14 +257,21 @@ export const editUser = (data, callBackSuc, callbackFail) => {
     fetch('http://localhost:5000/users/editUser', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "authorization": "bearer" + " " + getItem('ID_TOKEN'),
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify(data)
     })
-        .then((response) => response.json())
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Invalid Input')
+            };
+        })
         .then((result) => {
-            console.log('Success:', result);
+            // console.log('Success:', result);
             callBackSuc(result);
         })
         .catch((error) => {
@@ -206,14 +284,21 @@ export const deleteUser = (data, callBackSuc, callbackFail) => {
     fetch('http://localhost:5000/users/deleteUser', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "authorization": "bearer" + " " + getItem('ID_TOKEN'),
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify(data)
     })
-        .then((response) => response.json())
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Invalid Input')
+            };
+        })
         .then((result) => {
-            console.log('Success:', result);
+            //console.log('Success:', result);
             callBackSuc(result);
         })
         .catch((error) => {
@@ -235,14 +320,16 @@ export const productReportService = (data, callBackSuc) => {
         .then((response) => {
             if (response.ok) {
                 return response.json();
-            } else throw new response.json();
+            } else {
+                throw new Error('Invalid Input')
+            };
         }).then((result) => {
-            console.log('Success:', result);
+            // console.log('Success:', result);
             callBackSuc(result);
         })
         .catch((error) => {
             alert('An Error Occured: Please try Again!');
-            console.log(error);
+            //console.log(error);
             //callbackFail();
         });
 }
@@ -251,14 +338,20 @@ export const billReportService = (data, callBackSuc, callbackFail) => {
     fetch('http://localhost:5000/sale/getBill', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
+            "authorization": "bearer" + " " + getItem('ID_TOKEN'),
         },
         body: JSON.stringify(data)
     })
-        .then((response) => response.json())
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Invalid Input')
+            };
+        })
         .then((result) => {
-            console.log('Success:', result);
+            //console.log('Success:', result);
             callBackSuc(result);
         })
         .catch((error) => {

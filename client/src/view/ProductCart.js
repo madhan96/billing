@@ -47,10 +47,10 @@ class ProductCart extends Component {
 
     };
     render() {
-        console.log('loading cart render');
+        //console.log('loading cart render');
         const { classes, products } = this.props;
         const { page, productsPerPage } = this.state;
-        console.log(this.props);
+        //console.log(this.props);
 
         return (
 
