@@ -97,7 +97,7 @@ class Reports extends Component {
         this.setState({ billpage: 0 });
     };
     handleChange = (value) => {
-        console.log(value);
+        //console.log(value);
         this.setState({ productName: value });
     }
     handleBillChange = (e) => {
@@ -117,7 +117,7 @@ class Reports extends Component {
     }
     render() {
         const { billreport, productreport, classes } = this.props;
-        console.log(this.props.products);
+        //console.log(this.props.products);
         const defaultProps = {
             options: this.props.products,
             getOptionLabel: (option) => option.product_name,
